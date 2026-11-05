@@ -6,6 +6,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import { motion } from "framer-motion";
 import { addBook, deleteBook, updateBook } from "@/app/actions";
 import type { Book } from "@/db/queries";
 import { matchesLibrarySearch, useLibrarySearch } from "@/app/library-search";
@@ -64,7 +65,13 @@ function BookCard({ book }: { book: Book }) {
   }
 
   return (
-    <article className={isEditing ? "book-card book-card-editing" : "book-card"}>
+    <motion.article
+      className={isEditing ? "book-card book-card-editing" : "book-card"}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+    >
       {isEditing ? (
         <form action={updateBook.bind(null, book.id)} className="edit-book-form">
           <BookFields book={book} />
@@ -125,7 +132,7 @@ function BookCard({ book }: { book: Book }) {
           </div>
         </>
       )}
-    </article>
+    </motion.article>
   );
 }
 

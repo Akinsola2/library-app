@@ -7,6 +7,7 @@ import LibrarySearchBox, { LibrarySearchProvider } from "@/app/library-search";
 import LoanLists from "@/app/loan-lists";
 import MemberDirectory from "@/app/member-directory";
 import MemberRegistration from "@/app/member-registration";
+import { motion, MotionConfig } from "framer-motion";
 import type {
   AvailableBook,
   Book,
@@ -46,9 +47,28 @@ function DashboardStats({ stats }: { stats: DashboardStatsData }) {
   ];
 
   return (
-    <section className="stats-grid" aria-label="Library statistics">
+    <motion.section
+      className="stats-grid"
+      aria-label="Library statistics"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={{
+        hidden: { opacity: 1 },
+        visible: { transition: { staggerChildren: 0.08 } },
+      }}
+    >
       {cards.map((card) => (
-        <article className={`stat-card stat-${card.tone}`} key={card.label}>
+        <motion.article
+          className={`stat-card stat-${card.tone}`}
+          key={card.label}
+          variants={{
+            hidden: { opacity: 0, y: 14 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          whileHover={{ y: -3 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+        >
           <div className="stat-label">
             <p>{card.label}</p>
             <span className="stat-icon">
@@ -56,9 +76,9 @@ function DashboardStats({ stats }: { stats: DashboardStatsData }) {
             </span>
           </div>
           <strong>{card.value.toLocaleString("en")}</strong>
-        </article>
+        </motion.article>
       ))}
-    </section>
+    </motion.section>
   );
 }
 
@@ -76,10 +96,16 @@ export default function LibraryWorkspace({
   members: LibraryMember[];
 }) {
   return (
-    <LibrarySearchProvider>
+    <MotionConfig reducedMotion="user">
+      <LibrarySearchProvider>
       <main className="library-page">
         <div className="library-shell">
-          <header className="page-header">
+          <motion.header
+            className="page-header"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
             <Link className="brand" href="/" aria-label="The Reading Room home">
               <span className="brand-mark" aria-hidden="true">
                 R
@@ -90,10 +116,16 @@ export default function LibraryWorkspace({
               <LibrarySearchBox books={books} loans={loans} members={members} />
               <LibraryClock />
             </div>
-          </header>
+          </motion.header>
 
           <div className="app-layout">
-            <aside className="sidebar" aria-label="Library navigation">
+            <motion.aside
+              className="sidebar"
+              aria-label="Library navigation"
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+            >
               <p className="sidebar-label">LIBRARY</p>
               <nav className="sidebar-nav">
                 <a className="sidebar-link active" href="#overview">
@@ -119,19 +151,22 @@ export default function LibraryWorkspace({
                 </span>
                 <p>Every great story starts with a reader.</p>
               </div>
-            </aside>
+            </motion.aside>
             <div className="main-content">
-              <section
+              <motion.section
                 className="intro"
                 id="overview"
                 aria-labelledby="page-title"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.12, ease: "easeOut" }}
               >
                 <p className="eyebrow">YOUR LIBRARY AT A GLANCE</p>
                 <h1 id="page-title">Welcome to The Reading Room</h1>
                 <p className="intro-copy">
                   Keep track of your collection, loans, and community.
                 </p>
-              </section>
+              </motion.section>
 
               <DashboardStats stats={stats} />
               <CheckoutForm books={availableBooks} members={members} />
@@ -162,6 +197,7 @@ export default function LibraryWorkspace({
           </div>
         </div>
       </main>
-    </LibrarySearchProvider>
+      </LibrarySearchProvider>
+    </MotionConfig>
   );
 }
