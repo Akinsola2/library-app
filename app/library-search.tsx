@@ -79,7 +79,7 @@ export default function LibrarySearchBox({
             title: book.title,
             detail: `${book.author}${book.year ? ` · ${book.year}` : ""}`,
             section: "Books",
-            href: "#books",
+            href: "/books#books",
           })),
         ...loans
           .filter((loan) =>
@@ -100,8 +100,8 @@ export default function LibrarySearchBox({
             detail: `${loan.member} · due ${formatSearchDate(loan.due_on)}`,
             section: loan.is_overdue ? "Overdue" : "Borrowed",
             href: loan.is_overdue
-              ? "#overdue-books-title"
-              : "#borrowed-books-title",
+              ? "/loans#overdue-books-title"
+              : "/loans#borrowed-books-title",
           })),
         ...members
           .filter((member) =>
@@ -112,7 +112,7 @@ export default function LibrarySearchBox({
             title: member.name,
             detail: member.phone || "Library member",
             section: "Members",
-            href: "#member-directory",
+            href: "/members#member-directory",
           })),
       ]
     : [];

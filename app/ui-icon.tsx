@@ -6,7 +6,9 @@ type IconName =
   | "calendar"
   | "trash"
   | "search"
-  | "check";
+  | "check"
+  | "menu"
+  | "close";
 
 const paths: Record<IconName, string> = {
   book: "M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zm0 0v16M8 7h8m-8 4h8",
@@ -22,6 +24,8 @@ const paths: Record<IconName, string> = {
     "M3 6h18m-2 0-1 14H6L5 6m4 0V4h6v2m-5 4v6m4-6v6",
   search: "m21 21-4.3-4.3M19 10.5a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0Z",
   check: "m5 12 4 4L19 6",
+  menu: "M4 6h16M4 12h16M4 18h16",
+  close: "m6 6 12 12M18 6 6 18",
 };
 
 export default function Icon({
